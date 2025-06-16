@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_class"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Add Class" />
+    <item
+        android:id="@+id/add_teacher"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Add Teacher" />
+    <item
+        android:id="@+id/add_student"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Add Student" />
+    <item
+        android:id="@+id/add_note"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Add Note" />
+</menu>
+

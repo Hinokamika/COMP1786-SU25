@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style for active items in bottom navigation -->
+    <style name="BottomNavigationView.ActiveItemTextAppearance" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Force top padding to create space between icon and text -->
+        <item name="android:paddingTop">4dp</item>
+    </style>
+
+    <!-- Style for inactive items in bottom navigation -->
+    <style name="BottomNavigationView.InactiveItemTextAppearance" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Force top padding to create space between icon and text -->
+        <item name="android:paddingTop">4dp</item>
+    </style>
+
+    <!-- Custom popup menu style with rounded corners and centered text -->
+    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/popup_menu_background</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Style for popup menu items -->
+    <style name="CustomPopupMenuTextAppearance" parent="TextAppearance.AppCompat.Menu">
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:padding">12dp</item>
+    </style>
+</resources>

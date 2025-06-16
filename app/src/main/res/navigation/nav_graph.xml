@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/intro_page">
+
+    <activity
+        android:id="@+id/intro_page"
+        android:name="com.example.comp1786_su25.user_interface.Intro_page"
+        android:label="activity_intro_page"
+        tools:layout="@layout/activity_intro_page" />
+    <action
+        android:id="@+id/action_intro_page_to_login_page"
+        app:destination="@id/login_page" />
+    <activity
+        android:id="@+id/login_page"
+        android:name="com.example.comp1786_su25.user_interface.Login_page"
+        android:label="activity_login_page"
+        tools:layout="@layout/activity_login_page" />
+    <action
+        android:id="@+id/action_login_page_to_register_page"
+        app:destination="@id/register_page" />
+    <action
+        android:id="@+id/action_login_page_to_mainActivity"
+        app:destination="@id/mainActivity" />
+    <activity
+        android:id="@+id/register_page"
+        android:name="com.example.comp1786_su25.user_interface.Register_page"
+        android:label="activity_register_page"
+        tools:layout="@layout/activity_register_page" />
+    <action
+        android:id="@+id/action_register_page_to_login_page"
+        app:destination="@id/login_page" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.comp1786_su25.user_interface.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>
