@@ -12,9 +12,5 @@
         android:id="@+id/add_student"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="Add Student" />
-    <item
-        android:id="@+id/add_note"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Add Note" />
 </menu>
 

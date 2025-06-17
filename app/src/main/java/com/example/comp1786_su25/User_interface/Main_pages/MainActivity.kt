@@ -14,6 +14,8 @@ import com.example.comp1786_su25.User_interface.Site_pages.home_page
 import android.view.ContextThemeWrapper
 import com.example.comp1786_su25.User_interface.Components.AddClassDialog
 import com.example.comp1786_su25.User_interface.Components.AddTeacherDialog
+import com.example.comp1786_su25.User_interface.Site_pages.teacher_page
+import com.example.comp1786_su25.User_interface.Site_pages.user_page
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,7 +49,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.search -> {
-
+                    replaceFragment(teacher_page())
+                    true
+                }
+                R.id.profile -> {
+                    replaceFragment(user_page())
                     true
                 }
                 else -> false
@@ -114,12 +120,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.add_student -> {
                     // Handle add student action
-                    Toast.makeText(this, "Add Student Selected", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.add_note -> {
-                    // Handle add note action
-                    Toast.makeText(this, "Add Note Selected", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Add Student clicked", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false

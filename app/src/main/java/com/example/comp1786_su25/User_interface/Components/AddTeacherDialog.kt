@@ -72,7 +72,7 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
         btnPickDateOfBirth = popupView.findViewById(R.id.btnPickDateOfBirth)
 
         // Setup spinner with class types
-        val classTypes = arrayOf("Yoga", "Pilates", "Zumba", "Crossfit", "Other")
+        val classTypes = arrayOf("Flow Yoga", "Aerial Yoga", "Family Yoga")
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,

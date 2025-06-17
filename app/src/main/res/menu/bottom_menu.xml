@@ -7,7 +7,7 @@
 
     <item android:id="@+id/cart"
         android:title="Class"
-        android:icon="@drawable/baseline_shopping_cart_24"
+        android:icon="@drawable/landmark_solid"
         />
 
     <item
@@ -17,11 +17,11 @@
 
     <item android:id="@+id/search"
         android:title="Teacher"
-        android:icon="@drawable/search_solid"
+        android:icon="@drawable/chalkboard_teacher_solid"
         />
 
     <item android:id="@+id/profile"
-        android:title="Profile"
+        android:title="User"
         android:icon="@drawable/user_solid"
         />
 </menu>
