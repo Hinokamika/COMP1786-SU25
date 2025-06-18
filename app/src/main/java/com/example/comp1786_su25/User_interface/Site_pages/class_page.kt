@@ -16,7 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.comp1786_su25.R
 import com.example.comp1786_su25.Models.classModel
 import com.example.comp1786_su25.MVC.insertClass
-import com.example.comp1786_su25.Adapters.ClassAdapter
+import com.example.comp1786_su25.User_interface.Adapters.ClassAdapter
 import com.example.comp1786_su25.User_interface.Components.AddClassDialog
 import com.google.android.material.chip.Chip
 import java.sql.Date
