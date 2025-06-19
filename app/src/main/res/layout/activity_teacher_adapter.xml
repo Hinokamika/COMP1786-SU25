@@ -106,6 +106,19 @@
             tools:backgroundTint="#3F51B5"
             tools:text="Yoga" />
 
+        <!-- Date of Birth section -->
+        <TextView
+            android:id="@+id/dobTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Date of Birth: 1990-01-01"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/specializationTextView"
+            tools:text="Date of Birth: 1990-01-01" />
+
         <!-- Experience and rating section -->
         <ImageView
             android:id="@+id/experienceIcon"
@@ -114,7 +127,7 @@
             android:layout_marginTop="16dp"
             android:src="@android:drawable/ic_menu_recent_history"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/specializationTextView"
+            app:layout_constraintTop_toBottomOf="@id/dobTextView"
             app:tint="#757575" />
 
         <TextView

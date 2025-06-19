@@ -4,11 +4,10 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.comp1786_su25.Models.teacherModel
@@ -19,6 +18,8 @@ import java.util.Calendar
 import java.util.Locale
 import android.app.DatePickerDialog
 import android.app.AlertDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment() {
 
@@ -26,24 +27,29 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
     private lateinit var editTeacherName: EditText
     private lateinit var radioGroupGender: RadioGroup
     private lateinit var editDateOfBirth: EditText
-    private lateinit var spinnerTeacherClassType: Spinner
+    private lateinit var txtSelectedSpecializations: TextView
+    private lateinit var chipGroupSpecializations: ChipGroup
     private lateinit var btnTeacherSubmit: Button
     private lateinit var btnTeacherCancel: Button
     private lateinit var btnPickDateOfBirth: Button
     private lateinit var popupView: View
 
+    // Store selected specializations
+    private val selectedSpecializations = mutableListOf<String>()
+    private val availableSpecializations = arrayOf("Flow Yoga", "Aerial Yoga", "Family Yoga")
+
     // Calendar for date selection
     private val calendar = Calendar.getInstance()
 
     // Interface for communicating with parent
-    interface TeacherDialogListener {
-        fun onTeacherAdded(updatedClass: classModel)
+    interface DataRefreshListener {
+        fun onDataChanged()
     }
 
-    private var listener: TeacherDialogListener? = null
+    private var dataRefreshListener: DataRefreshListener? = null
 
-    fun setTeacherDialogListener(listener: TeacherDialogListener) {
-        this.listener = listener
+    fun setDataRefreshListener(listener: DataRefreshListener) {
+        this.dataRefreshListener = listener
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -66,26 +72,39 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
         editTeacherName = popupView.findViewById(R.id.editTeacherName)
         radioGroupGender = popupView.findViewById(R.id.radioGroupGender)
         editDateOfBirth = popupView.findViewById(R.id.editDateOfBirth)
-        spinnerTeacherClassType = popupView.findViewById(R.id.spinnerTeacherClassType)
+        txtSelectedSpecializations = popupView.findViewById(R.id.txtSelectedSpecializations)
+        chipGroupSpecializations = popupView.findViewById(R.id.chipGroupSpecializations)
         btnTeacherSubmit = popupView.findViewById(R.id.btnTeacherSubmit)
         btnTeacherCancel = popupView.findViewById(R.id.btnTeacherCancel)
         btnPickDateOfBirth = popupView.findViewById(R.id.btnPickDateOfBirth)
 
-        // Setup spinner with class types
-        val classTypes = arrayOf("Flow Yoga", "Aerial Yoga", "Family Yoga")
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            classTypes
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTeacherClassType.adapter = adapter
+        // Make the specialization text view clickable to show selection options
+        txtSelectedSpecializations.setOnClickListener {
+            showSpecializationSelectionDialog()
+        }
+
+        // Setup chips for specializations
+        setupSpecializationChips()
 
         // If the class has a specific type, select it as default
         existingClass?.let {
-            val classTypeIndex = classTypes.indexOf(it.class_type)
-            if (classTypeIndex >= 0) {
-                spinnerTeacherClassType.setSelection(classTypeIndex)
+            // Set teacher name
+            editTeacherName.setText(it.teacher?.name)
+
+            // Set gender
+            val genderRadioButtonId = if (it.teacher?.gender == "Male") R.id.radioMale else R.id.radioFemale
+            radioGroupGender.check(genderRadioButtonId)
+
+            // Set date of birth
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            editDateOfBirth.setText(dateFormat.format(it.teacher?.dateOfBirth ?: System.currentTimeMillis()))
+
+            // Set specializations if available
+            it.teacher?.specializations?.let { specs ->
+                selectedSpecializations.clear()
+                selectedSpecializations.addAll(specs)
+                updateSpecializationText()
+                updateSpecializationChips()
             }
         }
     }
@@ -106,6 +125,73 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
         // Cancel button
         btnTeacherCancel.setOnClickListener {
             dismiss()
+        }
+    }
+
+    private fun showSpecializationSelectionDialog() {
+        val checkedItems = BooleanArray(availableSpecializations.size) {
+            selectedSpecializations.contains(availableSpecializations[it])
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Select Specializations")
+            .setMultiChoiceItems(availableSpecializations, checkedItems) { _, which, isChecked ->
+                val specialization = availableSpecializations[which]
+                if (isChecked) {
+                    if (!selectedSpecializations.contains(specialization)) {
+                        selectedSpecializations.add(specialization)
+                    }
+                } else {
+                    selectedSpecializations.remove(specialization)
+                }
+            }
+            .setPositiveButton("OK") { _, _ ->
+                updateSpecializationText()
+                updateSpecializationChips()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun setupSpecializationChips() {
+        // Clear existing chips
+        chipGroupSpecializations.removeAllViews()
+
+        // Create and add a chip for each selected specialization
+        selectedSpecializations.forEach { specialization ->
+            addChip(specialization)
+        }
+    }
+
+    private fun updateSpecializationChips() {
+        // Clear existing chips
+        chipGroupSpecializations.removeAllViews()
+
+        // Create and add a chip for each selected specialization
+        selectedSpecializations.forEach { specialization ->
+            addChip(specialization)
+        }
+    }
+
+    private fun addChip(specialization: String) {
+        val chip = Chip(requireContext()).apply {
+            text = specialization
+            isCloseIconVisible = true
+            setOnCloseIconClickListener {
+                selectedSpecializations.remove(specialization)
+                chipGroupSpecializations.removeView(this)
+                updateSpecializationText()
+            }
+        }
+        chipGroupSpecializations.addView(chip)
+    }
+
+    private fun updateSpecializationText() {
+        if (selectedSpecializations.isEmpty()) {
+            txtSelectedSpecializations.text = ""
+            txtSelectedSpecializations.hint = "Select specializations"
+        } else {
+            txtSelectedSpecializations.text = selectedSpecializations.joinToString(", ")
         }
     }
 
@@ -148,6 +234,12 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
             return false
         }
 
+        // Check if at least one specialization is selected
+        if (selectedSpecializations.isEmpty()) {
+            Toast.makeText(context, "Please select at least one specialization", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         return true
     }
 
@@ -165,8 +257,13 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
                 name = editTeacherName.text.toString(),
                 gender = gender,
                 dateOfBirth = calendar.time,
-                classType = spinnerTeacherClassType.selectedItem.toString()
+                classType = selectedSpecializations.firstOrNull() ?: "",
+                specializations = selectedSpecializations
             )
+
+            // Insert teacher into database
+            val db = com.example.comp1786_su25.MVC.teacherDatabase(requireContext())
+            db.insertTeacher(teacher)
 
             // Create a temporary class model if existingClass is null
             val resultClass = existingClass ?: classModel(
@@ -175,7 +272,7 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
                 capacity = 0,
                 duration = 0,
                 price = 0.0,
-                class_type = spinnerTeacherClassType.selectedItem.toString(),
+                class_type = selectedSpecializations.firstOrNull() ?: "",
                 description = "",
                 teacher = null
             )
@@ -184,7 +281,7 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
             resultClass.teacher = teacher
 
             // Notify listener
-            listener?.onTeacherAdded(resultClass)
+            dataRefreshListener?.onDataChanged()
 
             // Close dialog
             dismiss()

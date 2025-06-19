@@ -130,7 +130,7 @@
                         android:background="@android:drawable/ic_menu_my_calendar" />
                 </LinearLayout>
 
-                <!-- Class Specialization (Dropdown) -->
+                <!-- Class Specialization (Multiple Selection) -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,15 +140,28 @@
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />
 
-                <Spinner
-                    android:id="@+id/spinnerTeacherClassType"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"
-                    android:entries="@array/yoga_class_types"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/txtSelectedSpecializations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:hint="Select specializations"
+                        android:background="@android:drawable/editbox_background"
+                        android:minHeight="48dp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupSpecializations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
 
                 <!-- Additional Info (Optional) - could be years of experience, certifications, etc. -->
                 <TextView

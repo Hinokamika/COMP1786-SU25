@@ -151,36 +151,6 @@ class teacherDatabase(context: Context) : SQLiteOpenHelper(context, "teachers.db
     }
 
     /**
-     * Get all teacher names for the spinner
-     */
-    fun getAllTeacherNames(): List<String> {
-        val teacherNames = ArrayList<String>()
-        teacherNames.add("No Teacher") // Add a default option
-
-        // Select name column
-        val selectQuery = "SELECT $COLUMN_NAME FROM $TABLE_TEACHERS"
-        val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery(selectQuery, null)
-
-        // Loop through rows and add names to list
-        if (cursor.moveToFirst()) {
-            do {
-                val nameIndex = cursor.getColumnIndex(COLUMN_NAME)
-                if (nameIndex != -1) {
-                    val name = cursor.getString(nameIndex)
-                    teacherNames.add(name)
-                }
-            } while (cursor.moveToNext())
-        }
-
-        // Close cursor and database
-        cursor.close()
-        db.close()
-
-        return teacherNames
-    }
-
-    /**
      * Get a teacher by their name
      */
     fun getTeacherByName(name: String): teacherModel? {
@@ -221,5 +191,23 @@ class teacherDatabase(context: Context) : SQLiteOpenHelper(context, "teachers.db
         db.close()
 
         return teacher
+    }
+
+    fun getAllTeacherNames(): List<String> {
+        val names = mutableListOf<String>()
+        val selectQuery = "SELECT $COLUMN_NAME FROM $TABLE_TEACHERS"
+        val db = this.readableDatabase
+        val cursor: Cursor = db.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val nameIndex = cursor.getColumnIndex(COLUMN_NAME)
+                if (nameIndex != -1) {
+                    names.add(cursor.getString(nameIndex))
+                }
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return names
     }
 }

@@ -108,10 +108,14 @@ class AddClassDialog : DialogFragment() {
         btnSubmit = view.findViewById(R.id.btn_submit)
         btnCancel = view.findViewById(R.id.btn_cancel)
         btnPickDateTime = view.findViewById(R.id.btn_pick_date_time)
+        spinnerTeacher = view.findViewById(R.id.spinner_teacher)
 
         // Set current date and time in the fields
         updateDateInView()
         updateTimeInView()
+
+        // Load teacher data into spinner
+        loadTeacherData()
     }
 
     private fun loadTeacherData() {
@@ -174,6 +178,14 @@ class AddClassDialog : DialogFragment() {
             year, month, day
         )
         datePickerDialog.show()
+    }
+
+    private fun setupTeacherSpinner() {
+        val db = teacherDatabase(requireContext())
+        val teacherNames = db.getAllTeacherNames()
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, teacherNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTeacher.adapter = adapter
     }
 
     private fun showTimePicker() {

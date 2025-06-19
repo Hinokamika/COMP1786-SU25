@@ -78,13 +78,6 @@
                         tools:text="Sarah Johnson" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/viewTeacherProfileButton"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="View Profile"
-                    android:textAllCaps="false" />
             </LinearLayout>
 
             <!-- Schedule Information Card -->
@@ -265,13 +258,6 @@
                             android:textStyle="bold"
                             tools:text="$25.00" />
 
-                        <Button
-                            android:id="@+id/bookClassButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="#4CAF50"
-                            android:text="Book Now"
-                            android:textColor="@android:color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

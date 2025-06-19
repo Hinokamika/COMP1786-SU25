@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.comp1786_su25.MVC.teacherDatabase
 import com.example.comp1786_su25.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -28,6 +29,16 @@ class ClassDetailsActivity : AppCompatActivity() {
         val classPrice = intent.getDoubleExtra("CLASS_PRICE", 0.0)
         val classCapacity = intent.getIntExtra("CLASS_CAPACITY", 0)
         val classDescription = intent.getStringExtra("CLASS_DESCRIPTION") ?: "No description available."
+        var teacherName = intent.getStringExtra("TEACHER_NAME")
+
+        // If teacher name wasn't passed, try to find it using the class type
+        if (teacherName == null) {
+            val teacherDb = teacherDatabase(this)
+            val teachers = teacherDb.getAllTeachers()
+            // Find a teacher that teaches this class type
+            val teacher = teachers.find { it.classType == classType }
+            teacherName = teacher?.name ?: "Unknown Teacher"
+        }
 
         // Initialize views
         val classNameTextView: TextView = findViewById(R.id.classNameTextView)
@@ -36,10 +47,12 @@ class ClassDetailsActivity : AppCompatActivity() {
         val classCapacityTextView: TextView = findViewById(R.id.classCapacityTextView)
         val classPriceTextView: TextView = findViewById(R.id.classPriceTextView)
         val classDescriptionTextView: TextView = findViewById(R.id.classDescriptionTextView)
-        val bookClassButton: Button = findViewById(R.id.bookClassButton)
+        val teacherNameTextView: TextView = findViewById(R.id.teacherNameTextView)
 
         // Set data to views
         classNameTextView.text = classType
+
+        teacherNameTextView.text = teacherName
 
         // Format date
         val dateFormat = SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault())
@@ -60,13 +73,6 @@ class ClassDetailsActivity : AppCompatActivity() {
         classDescriptionTextView.text = classDescription
 
         // Book button click listener
-        bookClassButton.setOnClickListener {
-            Toast.makeText(this, "Class booked successfully!", Toast.LENGTH_SHORT).show()
-            // You would typically add code here to update database, decrease available spots, etc.
-
-            // Close the activity after booking
-            finish()
-        }
     }
 
     // Handle back button in action bar
