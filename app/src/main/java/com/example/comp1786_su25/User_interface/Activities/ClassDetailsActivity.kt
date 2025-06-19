@@ -18,9 +18,11 @@ class ClassDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_class_details)
 
-        // Set up action bar with back button
+        // Set up toolbar with back button
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Class Details"
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         // Get data from intent
         val classType = intent.getStringExtra("CLASS_TYPE") ?: "Unknown Class"

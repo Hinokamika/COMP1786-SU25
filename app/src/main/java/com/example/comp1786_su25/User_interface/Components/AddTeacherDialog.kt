@@ -33,6 +33,7 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
     private lateinit var btnTeacherCancel: Button
     private lateinit var btnPickDateOfBirth: Button
     private lateinit var popupView: View
+    private lateinit var editAdditionalInfo: EditText
 
     // Store selected specializations
     private val selectedSpecializations = mutableListOf<String>()
@@ -77,6 +78,11 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
         btnTeacherSubmit = popupView.findViewById(R.id.btnTeacherSubmit)
         btnTeacherCancel = popupView.findViewById(R.id.btnTeacherCancel)
         btnPickDateOfBirth = popupView.findViewById(R.id.btnPickDateOfBirth)
+
+        // Initialize editAdditionalInfo - fix for UninitializedPropertyAccessException
+        editAdditionalInfo = popupView.findViewById(R.id.editAdditionalInfo) ?: EditText(requireContext()).apply {
+            setText("0") // Default value for experience
+        }
 
         // Make the specialization text view clickable to show selection options
         txtSelectedSpecializations.setOnClickListener {
@@ -258,7 +264,7 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
                 gender = gender,
                 dateOfBirth = calendar.time,
                 classType = selectedSpecializations.firstOrNull() ?: "",
-                specializations = selectedSpecializations
+                experience = editAdditionalInfo.text.toString().toIntOrNull() ?: 0,
             )
 
             // Insert teacher into database
@@ -291,6 +297,8 @@ class AddTeacherDialog(private val existingClass: classModel?) : DialogFragment(
                 "Error adding teacher: ${e.message}",
                 Toast.LENGTH_SHORT
             ).show()
+            android.util.Log.e("AddTeacherDialog", "Error adding teacher", e)
+            e.printStackTrace() // This will print the full stack trace
         }
     }
 
