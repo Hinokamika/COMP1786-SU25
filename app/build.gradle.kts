@@ -57,4 +57,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:3.0.0")
     implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.github.dotenv-org:dotenv-vault-kotlin:0.0.2")
 }

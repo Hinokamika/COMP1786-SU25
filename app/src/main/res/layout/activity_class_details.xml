@@ -128,7 +128,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/ic_menu_my_calendar"
-                            android:tint="#757575" />
+                            app:tint="#757575"
+                            android:contentDescription="Image"/>
 
                         <TextView
                             android:id="@+id/classDateTextView"
@@ -151,7 +152,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@android:drawable/ic_menu_recent_history"
-                            android:tint="#757575" />
+                            app:tint="#757575"
+                            android:contentDescription="Image"/>
 
                         <TextView
                             android:id="@+id/classTimeTextView"
@@ -272,6 +274,13 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             tools:text="$25.00" />
+
+                        <Button
+                            android:id="@+id/updateClassButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Update" />
 
                     </LinearLayout>
                 </LinearLayout>
