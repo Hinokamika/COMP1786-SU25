@@ -4,12 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.comp1786_su25.R
 import com.example.comp1786_su25.Models.classModel
 import com.example.comp1786_su25.User_interface.Activities.ClassDetailsActivity
+import com.example.comp1786_su25.User_interface.Components.Update.UpdateClassDialog
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -68,6 +70,13 @@ class ClassAdapter(private val classes: List<classModel>) :
             intent.putExtra("CLASS_PRICE", classItem.price)
             intent.putExtra("CLASS_CAPACITY", classItem.capacity)
             intent.putExtra("CLASS_DESCRIPTION", classItem.description)
+            holder.itemView.context.startActivity(intent)
+        }
+
+        val updateClassButtons: Button = holder.itemView.findViewById(R.id.updateClassButton)
+        updateClassButtons.setOnClickListener {
+            val intent = Intent(holder.itemView.context, UpdateClassDialog::class.java)
+            intent.putExtra("CLASS_POSITION", position)
             holder.itemView.context.startActivity(intent)
         }
     }

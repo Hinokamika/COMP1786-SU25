@@ -1,6 +1,5 @@
-package com.example.comp1786_su25.User_interface.Components
+package com.example.comp1786_su25.User_interface.Activities
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import com.example.comp1786_su25.Models.teacherModel
 import com.example.comp1786_su25.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class TeacherDetailsDialog : DialogFragment() {
@@ -80,7 +80,7 @@ class TeacherDetailsDialog : DialogFragment() {
             experienceTextView.text = "$experience years experience"
 
             // Format date of birth
-            val dobDate = java.util.Date(dateOfBirth)
+            val dobDate = Date(dateOfBirth)
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val year = Calendar.getInstance().get(Calendar.YEAR) -
                        SimpleDateFormat("yyyy", Locale.getDefault()).format(dobDate).toInt()

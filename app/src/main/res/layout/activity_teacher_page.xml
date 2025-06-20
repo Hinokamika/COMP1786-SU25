@@ -117,17 +117,6 @@
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
-            <TextView
-                android:id="@+id/activeFiltersTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Active filters: None"
-                android:textColor="#757575"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/filtersScrollView" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -171,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="No yoga teachers available"
+                    android:text="No flow yoga teachers available"
                     android:textColor="#757575"
                     android:textStyle="italic"
                     android:visibility="gone" />
@@ -200,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="No pilates teachers available"
+                    android:text="No aerial yoga teachers available"
                     android:textColor="#757575"
                     android:textStyle="italic"
                     android:visibility="gone" />
@@ -229,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="No other instructors available"
+                    android:text="No family yoga teachers available"
                     android:textColor="#757575"
                     android:textStyle="italic"
                     android:visibility="gone" />
@@ -261,31 +250,6 @@
             android:layout_height="120dp"
             android:src="@android:drawable/ic_menu_info_details"
             app:tint="#757575" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="No teachers found"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Try adjusting your filters or search term"
-            android:textColor="#757575" />
-
-        <Button
-            android:id="@+id/clearFiltersButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Clear Filters" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

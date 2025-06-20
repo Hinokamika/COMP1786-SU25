@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80000000"
-    tools:context=".user_interface.components.AddClassDialog">
+    tools:context=".User_interface.Components.AddClassDialog">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/popup_window_view_with_border"

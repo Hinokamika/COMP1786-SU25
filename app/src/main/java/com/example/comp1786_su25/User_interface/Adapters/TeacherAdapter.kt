@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.comp1786_su25.Models.teacherModel
 import com.example.comp1786_su25.R
-import com.example.comp1786_su25.User_interface.Components.TeacherDetailsDialog
+import com.example.comp1786_su25.User_interface.Activities.TeacherDetailsDialog
 import java.text.SimpleDateFormat
 import java.util.Locale
 
