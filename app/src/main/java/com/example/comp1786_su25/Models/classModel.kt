@@ -3,6 +3,7 @@ package com.example.comp1786_su25.Models
 import java.sql.Date
 
 class classModel (
+    var id: Int = 0,
     var day_of_week : Date,
     var time_of_course : Int,
     var capacity : Int,
@@ -14,7 +15,8 @@ class classModel (
 ){
     override fun toString(): String {
         return "classModel{" +
-                "day_of_week=$day_of_week" +
+                "id=$id" +
+                ", day_of_week=$day_of_week" +
                 ", time_of_course=$time_of_course" +
                 ", capacity=$capacity" +
                 ", duration=$duration" +

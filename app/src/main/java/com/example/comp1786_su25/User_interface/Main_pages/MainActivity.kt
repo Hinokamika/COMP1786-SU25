@@ -17,10 +17,11 @@ import com.example.comp1786_su25.User_interface.Components.AddTeacherDialog
 import com.example.comp1786_su25.User_interface.Site_pages.teacher_page
 import com.example.comp1786_su25.User_interface.Site_pages.user_page
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AddClassDialog.DataRefreshListener, AddTeacherDialog.DataRefreshListener {
 
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var fab: FloatingActionButton
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,6 +133,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+        currentFragment = fragment
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    }
+
+    override fun onDataChanged() {
+        // When data changes, refresh the current fragment if it's a class_page
+        val currentClassFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if (currentClassFragment is class_page) {
+            // If we're on the class page, tell it to refresh directly
+            (currentClassFragment as class_page).onDataChanged()
+        } else if (bottomNavigationView.selectedItemId != R.id.cart) {
+            // If we're not on the class page, navigate to it to show the new class
+            bottomNavigationView.selectedItemId = R.id.cart
+        }
     }
 }

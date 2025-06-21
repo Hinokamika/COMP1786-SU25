@@ -27,13 +27,11 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
     // UI components
     private lateinit var searchEditText: EditText
     private lateinit var todaysClassesRecyclerView: RecyclerView
-    private lateinit var tomorrowClassesRecyclerView: RecyclerView
     private lateinit var upcomingClassesRecyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var loadingProgressBar: ProgressBar
     private lateinit var emptyStateView: LinearLayout
     private lateinit var noTodaysClassesTextView: TextView
-    private lateinit var noTomorrowClassesTextView: TextView
     private lateinit var noUpcomingClassesTextView: TextView
 
     // Filter chips
@@ -54,7 +52,6 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
 
     // Adapters
     private lateinit var todaysClassesAdapter: ClassAdapter
-    private lateinit var tomorrowClassesAdapter: ClassAdapter
     private lateinit var upcomingClassesAdapter: ClassAdapter
 
     override fun onCreateView(
@@ -107,7 +104,6 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
 
         // RecyclerViews
         todaysClassesRecyclerView = view.findViewById(R.id.todaysClassesRecyclerView)
-        tomorrowClassesRecyclerView = view.findViewById(R.id.tomorrowClassesRecyclerView)
         upcomingClassesRecyclerView = view.findViewById(R.id.upcomingClassesRecyclerView)
 
         // Other UI components
@@ -115,7 +111,6 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
         loadingProgressBar = view.findViewById(R.id.loadingProgressBar)
         emptyStateView = view.findViewById(R.id.emptyStateView)
         noTodaysClassesTextView = view.findViewById(R.id.noTodaysClassesTextView)
-        noTomorrowClassesTextView = view.findViewById(R.id.noTomorrowClassesTextView)
         noUpcomingClassesTextView = view.findViewById(R.id.noUpcomingClassesTextView)
     }
 
@@ -124,11 +119,6 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
         todaysClassesRecyclerView.layoutManager = LinearLayoutManager(context)
         todaysClassesAdapter = ClassAdapter(emptyList())
         todaysClassesRecyclerView.adapter = todaysClassesAdapter
-
-        // Setup for Tomorrow's Classes
-        tomorrowClassesRecyclerView.layoutManager = LinearLayoutManager(context)
-        tomorrowClassesAdapter = ClassAdapter(emptyList())
-        tomorrowClassesRecyclerView.adapter = tomorrowClassesAdapter
 
         // Setup for Upcoming Classes
         upcomingClassesRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -210,15 +200,11 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
         todaysClassesAdapter = ClassAdapter(todaysClasses)
         todaysClassesRecyclerView.adapter = todaysClassesAdapter
 
-        tomorrowClassesAdapter = ClassAdapter(tomorrowClasses)
-        tomorrowClassesRecyclerView.adapter = tomorrowClassesAdapter
-
         upcomingClassesAdapter = ClassAdapter(upcomingClasses)
         upcomingClassesRecyclerView.adapter = upcomingClassesAdapter
 
         // Show/hide empty state messages
         noTodaysClassesTextView.visibility = if (todaysClasses.isEmpty()) View.VISIBLE else View.GONE
-        noTomorrowClassesTextView.visibility = if (tomorrowClasses.isEmpty()) View.VISIBLE else View.GONE
         noUpcomingClassesTextView.visibility = if (upcomingClasses.isEmpty()) View.VISIBLE else View.GONE
 
         // Show empty state view if all lists are empty
@@ -254,12 +240,30 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
 
     private fun categorizeClasses() {
         val today = Calendar.getInstance()
-        val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
+        // Reset time component for today
+        today.set(Calendar.HOUR_OF_DAY, 0)
+        today.set(Calendar.MINUTE, 0)
+        today.set(Calendar.SECOND, 0)
+        today.set(Calendar.MILLISECOND, 0)
+
+        val tomorrow = Calendar.getInstance()
+        tomorrow.add(Calendar.DAY_OF_YEAR, 1)
+        // Reset time component for tomorrow
+        tomorrow.set(Calendar.HOUR_OF_DAY, 0)
+        tomorrow.set(Calendar.MINUTE, 0)
+        tomorrow.set(Calendar.SECOND, 0)
+        tomorrow.set(Calendar.MILLISECOND, 0)
 
         // Filter for today's classes
         todaysClasses = allClasses.filter { classItem ->
             val classDate = Calendar.getInstance()
             classDate.time = classItem.day_of_week
+            // Reset time component for comparison
+            classDate.set(Calendar.HOUR_OF_DAY, 0)
+            classDate.set(Calendar.MINUTE, 0)
+            classDate.set(Calendar.SECOND, 0)
+            classDate.set(Calendar.MILLISECOND, 0)
+
             classDate.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
             classDate.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
         }
@@ -268,6 +272,12 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
         tomorrowClasses = allClasses.filter { classItem ->
             val classDate = Calendar.getInstance()
             classDate.time = classItem.day_of_week
+            // Reset time component for comparison
+            classDate.set(Calendar.HOUR_OF_DAY, 0)
+            classDate.set(Calendar.MINUTE, 0)
+            classDate.set(Calendar.SECOND, 0)
+            classDate.set(Calendar.MILLISECOND, 0)
+
             classDate.get(Calendar.YEAR) == tomorrow.get(Calendar.YEAR) &&
             classDate.get(Calendar.DAY_OF_YEAR) == tomorrow.get(Calendar.DAY_OF_YEAR)
         }
@@ -276,7 +286,14 @@ class class_page : Fragment(), AddClassDialog.DataRefreshListener {
         upcomingClasses = allClasses.filter { classItem ->
             val classDate = Calendar.getInstance()
             classDate.time = classItem.day_of_week
-            classDate.after(tomorrow.time)
+            // Reset time component for comparison
+            classDate.set(Calendar.HOUR_OF_DAY, 0)
+            classDate.set(Calendar.MINUTE, 0)
+            classDate.set(Calendar.SECOND, 0)
+            classDate.set(Calendar.MILLISECOND, 0)
+
+            // A class is "upcoming" if it's after tomorrow
+            classDate.after(tomorrow)
         }
     }
 

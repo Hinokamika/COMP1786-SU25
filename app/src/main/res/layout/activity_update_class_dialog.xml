@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     tools:context=".User_interface.Components.Update.UpdateClassDialog">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/popup_window_view_with_border"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="500dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -37,12 +37,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center"
-                    android:text="Add New Class"
+                    android:text="Update Class"
                     android:textColor="@android:color/black"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
+                    android:textStyle="bold" />
 
                 <!-- Day of Week (Dropdown) -->
                 <TextView

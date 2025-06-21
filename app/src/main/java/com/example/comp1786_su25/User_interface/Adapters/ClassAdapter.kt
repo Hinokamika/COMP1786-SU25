@@ -61,22 +61,15 @@ class ClassAdapter(private val classes: List<classModel>) :
         // Set click listener to open class details
         holder.classCard.setOnClickListener {
             val intent = Intent(holder.itemView.context, ClassDetailsActivity::class.java)
-            // We don't have an ID field in the model, so we'll pass the position as a workaround
-            intent.putExtra("CLASS_POSITION", position)
-            // Or pass the individual class data components
+            // Pass the class ID instead of position
+            intent.putExtra("CLASS_ID", classItem.id)
+            // Also pass the individual class data components as before
             intent.putExtra("CLASS_TYPE", classItem.class_type)
             intent.putExtra("CLASS_DATE", classItem.day_of_week.time)
             intent.putExtra("CLASS_DURATION", classItem.duration)
             intent.putExtra("CLASS_PRICE", classItem.price)
             intent.putExtra("CLASS_CAPACITY", classItem.capacity)
             intent.putExtra("CLASS_DESCRIPTION", classItem.description)
-            holder.itemView.context.startActivity(intent)
-        }
-
-        val updateClassButtons: Button = holder.itemView.findViewById(R.id.updateClassButton)
-        updateClassButtons.setOnClickListener {
-            val intent = Intent(holder.itemView.context, UpdateClassDialog::class.java)
-            intent.putExtra("CLASS_POSITION", position)
             holder.itemView.context.startActivity(intent)
         }
     }

@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.comp1786_su25.MVC.teacherDatabase
 import com.example.comp1786_su25.R
+import com.example.comp1786_su25.User_interface.Components.Update.UpdateClassDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,6 +31,13 @@ class ClassDetailsActivity : AppCompatActivity() {
         val classPrice = intent.getDoubleExtra("CLASS_PRICE", 0.0)
         val classCapacity = intent.getIntExtra("CLASS_CAPACITY", 0)
         val classDescription = intent.getStringExtra("CLASS_DESCRIPTION") ?: "No description available."
+
+        // Get class ID from intent (new approach)
+        val classId = intent.getIntExtra("CLASS_ID", -1)
+
+        // Keep the position for backward compatibility
+        val classPosition = intent.getIntExtra("CLASS_POSITION", -1)
+
         var teacherName = intent.getStringExtra("TEACHER_NAME")
 
         // If teacher name wasn't passed, try to find it using the class type
@@ -74,7 +81,19 @@ class ClassDetailsActivity : AppCompatActivity() {
         // Set description
         classDescriptionTextView.text = classDescription
 
-        // Book button click listener
+        // Set up the update button if available
+        val updateClassButton: Button? = findViewById(R.id.updateClassButton)
+        updateClassButton?.setOnClickListener {
+            val dialog = UpdateClassDialog()
+            val bundle = Bundle()
+
+            // Use class ID if available, otherwise fall back to position
+            val idToPass = if (classId != -1) classId else classPosition
+            bundle.putInt("CLASS_ID", idToPass)
+
+            dialog.arguments = bundle
+            dialog.show(supportFragmentManager, "UpdateClassDialog")
+        }
     }
 
     // Handle back button in action bar

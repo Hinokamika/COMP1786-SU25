@@ -1,5 +1,6 @@
 package com.example.comp1786_su25.User_interface.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.example.comp1786_su25.Models.teacherModel
 import com.example.comp1786_su25.R
+import com.example.comp1786_su25.User_interface.Components.Update.UpdateTeacherDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -93,6 +95,14 @@ class TeacherDetailsDialog : DialogFragment() {
                 else
                     android.R.drawable.ic_menu_myplaces
             )
+
+            val teacherId = arguments?.getString("teacherId") // Assuming teacherId is passed as an argument
+            val updateButton: Button = view.findViewById(R.id.updateButton)
+            updateButton.setOnClickListener {
+                val intent = Intent(requireContext(), UpdateTeacherDialog::class.java)
+                intent.putExtra("TEACHER_ID", teacherId)
+                startActivity(intent)
+            }
         }
 
         // Set up close button

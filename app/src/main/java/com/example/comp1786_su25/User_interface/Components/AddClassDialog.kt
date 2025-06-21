@@ -232,6 +232,19 @@ class AddClassDialog : DialogFragment() {
             editDateOfCourse.error = "Date is required"
             return false
         }
+        // Validate that the date is not in the past
+        try {
+            val selectedDate = Date.valueOf(editDateOfCourse.text.toString())
+            val today = Date(System.currentTimeMillis())
+            if (selectedDate.before(today)) {
+                editDateOfCourse.error = "Date cannot be in the past"
+                Toast.makeText(context, "Please select today or a future date", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        } catch (e: Exception) {
+            editDateOfCourse.error = "Invalid date format"
+            return false
+        }
 
         // Validate time
         if (editTimeOfCourse.text.toString().isEmpty()) {

@@ -141,6 +141,7 @@ class insertClass(private val context: Context) : SQLiteOpenHelper(context, "cla
             }
 
             classItem = classModel(
+                id = cursor.getInt(cursor.getColumnIndexOrThrow(ID)), // Add the ID here
                 day_of_week = date,
                 time_of_course = cursor.getInt(cursor.getColumnIndexOrThrow(TIME_OF_COURSE)),
                 capacity = cursor.getInt(cursor.getColumnIndexOrThrow(CAPACITY)),
